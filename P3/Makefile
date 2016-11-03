@@ -9,7 +9,7 @@
 
 JC = javac
 CP = ~cs536-1/public/tools/deps_src/java-cup-11b.jar:~cs536-1/public/tools/deps_src/java-cup-11b-runtime.jar:~cs536-1/public/tools/deps:.
-CP2 = ./deps:.
+CP2 = ~cs536-1/public/tools/deps:.
 
 P3.class: P3.java parser.class Yylex.class ASTnode.class
 	$(JC)    P3.java
