@@ -1,1 +1,55 @@
+// should include bad and multiply declared names for all of the different kinds of names, 
+// and in all of the different places that declarations can appear.
+int glb;
+int glb;
+bool b;
+bool b;
 
+struct a{
+    int member;
+}
+
+struct a[
+    int member;
+}
+
+struct s1{
+    int a;
+    int b;
+    bool x;
+};
+
+struct s2{
+    int a;
+    int b;
+}
+
+struct s3{
+       struct s2 inner;
+       int val;
+};
+
+
+// Non-function declared void
+void main(int a, int k) {
+
+    // test names
+    int glb;
+    bool myB;
+    struct s1 s1_Inst1;
+    struct s1 s1_Inst2;
+    struct s2 s2_Inst;
+    struct s3 s3_Inst;
+    // invalid struct type name
+    struct inva invalid;
+
+    // undeclared id
+    tomato = glb;
+    // non-function declared void
+    void q;
+    // dot Access non-struct type
+    s3 = glb.x;
+    // invalid struct field name
+    s1_Inst1 = s1_Invalid.invalid;
+
+}
