@@ -29,10 +29,10 @@ ASTnode.class: ast.java
 cats.jlex.java: cats.jlex sym.class
 	java  $(CP)  JLex.Main cats.jlex
 
-sym.class: SemSym.java
-	$(JC)  -g  SemSym.java
+sym.class: sym.java
+	$(JC)  -g  sym.java
 
-SemSym.java: harambe.cup
+sym.java: harambe.cup
 	java $(CP)   java_cup.Main < harambe.cup
 
 ErrMsg.class: ErrMsg.java
