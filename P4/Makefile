@@ -9,32 +9,31 @@
 ###
 
 JC = javac
-CP = ~cs536-1/public/tools/deps_src/java-cup-11b.jar:~cs536-1/public/tools/deps_src/java-cup-11b-runtime.jar:~cs536-1/public/tools/deps:.
-CP2 = ~cs536-1/public/tools/deps:.
+CP = -cp ./deps
 
-P3.class: P4.java parser.class Yylex.class ASTnode.class
-	$(JC)    P4.java
+P4.class: P4.java parser.class Yylex.class ASTnode.class
+	$(JC) -g   P4.java
 
 parser.class: parser.java ASTnode.class Yylex.class ErrMsg.class
 	$(JC)      parser.java
 
 parser.java: harambe.cup
-	java   java_cup.Main < harambe.cup
+	java $(CP)  java_cup.Main < harambe.cup
 
-Yylex.class: cats.jlex.java SemSym.class ErrMsg.class
+Yylex.class: cats.jlex.java sym.class ErrMsg.class
 	$(JC)   cats.jlex.java
 
 ASTnode.class: ast.java
-	$(JC)  ast.java
+	$(JC) -g ast.java
 
-cats.jlex.java: cats.jlex SemSym.class
-	java    JLex.Main cats.jlex
+cats.jlex.java: cats.jlex sym.class
+	java  $(CP)  JLex.Main cats.jlex
 
 sym.class: SemSym.java
-	$(JC)    SemSym.java
+	$(JC)  -g  SemSym.java
 
-sym.java: harambe.cup
-	java    java_cup.Main < harambe.cup
+SemSym.java: harambe.cup
+	java $(CP)   java_cup.Main < harambe.cup
 
 ErrMsg.class: ErrMsg.java
 	$(JC) ErrMsg.java
@@ -47,4 +46,4 @@ test:
 # clean
 ###
 clean:
-	rm -f *~ *.class parser.java cats.jlex.java SemSym.java
+	rm -f *~ *.class parser.java cats.jlex.java sym.java
