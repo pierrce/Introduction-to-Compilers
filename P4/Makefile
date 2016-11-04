@@ -1,4 +1,5 @@
-###
+#
+#
 # This Makefile can be used to make a parser for the cats language
 # (parser.class) and to make a program (P3.class) that tests the parser and
 # the unparse methods in ast.java.
@@ -11,39 +12,39 @@ JC = javac
 CP = ~cs536-1/public/tools/deps_src/java-cup-11b.jar:~cs536-1/public/tools/deps_src/java-cup-11b-runtime.jar:~cs536-1/public/tools/deps:.
 CP2 = ~cs536-1/public/tools/deps:.
 
-P3.class: P3.java parser.class Yylex.class ASTnode.class
-	$(JC)    P3.java
+P3.class: P4.java parser.class Yylex.class ASTnode.class
+	$(JC)    P4.java
 
 parser.class: parser.java ASTnode.class Yylex.class ErrMsg.class
 	$(JC)      parser.java
 
-parser.java: cats.cup
-	java   java_cup.Main < cats.cup
+parser.java: harambe.cup
+	java   java_cup.Main < harambe.cup
 
-Yylex.class: cats.jlex.java sym.class ErrMsg.class
+Yylex.class: cats.jlex.java SemSym.class ErrMsg.class
 	$(JC)   cats.jlex.java
 
 ASTnode.class: ast.java
 	$(JC)  ast.java
 
-cats.jlex.java: cats.jlex sym.class
+cats.jlex.java: cats.jlex SemSym.class
 	java    JLex.Main cats.jlex
 
-sym.class: sym.java
-	$(JC)    sym.java
+sym.class: SemSym.java
+	$(JC)    SemSym.java
 
-sym.java: cats.cup
-	java    java_cup.Main < cats.cup
+sym.java: harambe.cup
+	java    java_cup.Main < harambe.cup
 
 ErrMsg.class: ErrMsg.java
 	$(JC) ErrMsg.java
 
 ##test
 test:
-	java   P3 test.cf test.out
+	java   P4 test.cf test.out
 
 ###
 # clean
 ###
 clean:
-	rm -f *~ *.class parser.java cats.jlex.java sym.java
+	rm -f *~ *.class parser.java cats.jlex.java SemSym.java
