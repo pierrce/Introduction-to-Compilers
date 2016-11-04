@@ -1,15 +1,26 @@
-public class SemSym {
-    private String type;
-    
-    public SemSym(String type) {
-        this.type = type;
+public class VarSym {
+
+    private String returnType;
+    private List<String> paramTypes;
+
+    public VarSym(String rt, List<String> pt) {
+        this.returnType = rt;
+        this.paramTypes = pt;
     }
-    
-    public String getType() {
-        return type;
+
+    public String getReturnType() {
+        return this.returnType;
     }
-    
+
+    public String getParamTypes() {
+        string ret = "";
+        for (int i = 0; i < paramTypes.size(); i++) {
+            ret += (this.paramTypes.get(i) + " ");
+        }
+        return ret;
+    }
+
     public String toString() {
-        return type;
+        return "not implemented";
     }
 }
