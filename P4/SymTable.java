@@ -3,7 +3,7 @@ import java.util.*;
 public class SymTable {
     private List<HashMap<String, SemSym>> list;
     private String curStruct;
-    private boolean isStruct = false;
+    private String curFunction;
     
     public SymTable() {
         list = new LinkedList<HashMap<String, SemSym>>();
@@ -75,11 +75,17 @@ public class SymTable {
 	return this.curStruct;
     }
 
-    public boolean isSecondStruct(){
-	return this.isStruct;
+    public void addToFunction(String s){
+	if(this.curFunction == null) this.curFunction = s;
+	else this.curFunction = this.curFunction+","+s;
     }
 
-    public void setIsStruct(boolean b){
-	this.isStruct = b;
+    public String getFunction(){
+	if(this.curFunction == null) return "";
+	else return this.curFunction;
+    }
+
+    public void resetFunction(){
+	this.curFunction = null;
     }
 }

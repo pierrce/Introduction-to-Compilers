@@ -185,6 +185,8 @@ class FormalsListNode extends ASTnode {
     }
 
     public void nameAnalysis(SymTable symTab){
+	String list;
+
 	Iterator<FormalDeclNode> i = myFormals.iterator();
 	while(i.hasNext()){
 	    i.next().nameAnalysis(symTab);
@@ -351,7 +353,13 @@ class FnDeclNode extends DeclNode {
 	catch(DuplicateSymException d){System.out.println("FnDecl");}
 	catch(EmptySymTableException e){System.out.println("EmptySymTableException");}
 
+	symTab.resetFunction();
 	this.myFormalsList.nameAnalysis(symTab);
+
+	symTab.lookupGlobal(this.myId.getStrVal()).setType(
+	    symTab.getFunction()+"->"+this.myType.getType()
+	);
+
 	this.myBody.nameAnalysis(symTab);
     }
 
@@ -388,6 +396,8 @@ class FormalDeclNode extends DeclNode {
 
     public void nameAnalysis(SymTable symTab) {
 	SemSym s = new SemSym(this.myType.getType()); 
+	symTab.addToFunction(this.myType.getType());
+	System.out.println("Formally Declared "+symTab.getFunction());
 
 	try{
 	    symTab.addDecl(this.myId.getStrVal(), s);

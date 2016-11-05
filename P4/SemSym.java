@@ -18,6 +18,10 @@ public class SemSym {
         return type;
     }
 
+    public void setType(String s) {
+	this.type = s;
+    }
+
     public String getVarName() {
         return varName;
     }
