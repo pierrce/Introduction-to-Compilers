@@ -15,9 +15,13 @@ public class FunctionSym extends SemSym {
     public String getParamTypes() {
         string ret = "";
         for (int i = 0; i < paramTypes.size(); i++) {
-            ret += (this.paramTypes.get(i) + " ");
+            ret += (this.paramTypes.get(i) + ",");
         }
         return ret;
+    }
+
+    public addParam(String s){
+	paraTypes.add(s);
     }
 
     public String toString() {

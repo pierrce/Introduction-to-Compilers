@@ -2,6 +2,8 @@ import java.util.*;
 
 public class SymTable {
     private List<HashMap<String, SemSym>> list;
+    private String curStruct;
+    private boolean isStruct = false;
     
     public SymTable() {
         list = new LinkedList<HashMap<String, SemSym>>();
@@ -65,4 +67,19 @@ public class SymTable {
 	return this.list;
     }
 
+    public void setCur(String s){
+	this.curStruct = s;
+    }
+
+    public String getCur(){
+	return this.curStruct;
+    }
+
+    public boolean isSecondStruct(){
+	return this.isStruct;
+    }
+
+    public void setIsStruct(boolean b){
+	this.isStruct = b;
+    }
 }

@@ -5,7 +5,10 @@ struct Point {
     int x;
     int y;
 };
-int f(int x, bool b) { }
+int f(int x, bool b) {
+    v = x;
+    o = b;
+}
 void g() {
     int a;
     bool b;

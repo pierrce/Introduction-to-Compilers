@@ -343,6 +343,15 @@ class FnDeclNode extends DeclNode {
     public void nameAnalysis(SymTable symTab) {
 
 	SemSym s = new SemSym(this.myType.getType());
+
+	Iterator<DeclNode> it = myFormalsList.iterator();
+        if (it.hasNext()) { // if there is at least one element
+            it.next().
+            while (it.hasNext()) {  // print the rest of the list
+                p.print(", ");
+                it.next().unparse(p, indent);
+            }
+        } 
 	
 	try{
 	    symTab.addDecl(this.myId.getStrVal(), s);
