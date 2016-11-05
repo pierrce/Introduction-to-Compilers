@@ -1,63 +1,20 @@
-int x(null);
-int y(null);
-bool b(null);
-struct node(struct){
-    int number(null);
-    bool empty(null);
+int v;
+bool o;
+struct Point{
+    int x;
+    int y;
 };
 
-void printError(void)() {
-    s(null) = "Error!";
-    cout << s(null);
-    cout << "Would you like to continue? y/n";
-    cin >> b(null);
-    return;
+int f(int x, bool b) {
 }
 
-bool isTrue(bool)() {
-    if (((x(null) + y(null)) > 0)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-int multiply(int)() {
-    return (x(null) * y(null));
-}
-
-void main(void)() {
-    struct node(null) n(null);
-    x(null) = 7;
-    b(null) = True(null);
-    if (b(null)) {
-        x(null) = ((4 + (3 * 5)) - y(null));
-        while (c(null)) {
-            y(null) = ((y(null) * 2) + x(null));
-        }
-    }
-    else {
-        x(null) = 0;
-    }
-    i1(null) = (((((a(null)).b(null)).c(null)).d(null)).e(null)).f(null);
-    if (((myNode(null)).data(null) >= 0)) {
-        y(null) = true;
-    }
-    else {
-        y(null) = false;
-    }
-    while ((x(null) >= 0)) {
-        while ((!y(null))) {
-            x(null) = 5;
-            if ((!(myNode(null)).isEmpty(null))) {
-                if ((w(null) == 0)) {
-                    multiply(null)();
-                    x(null)++;
-                }
-            }
-        }
-    }
-    return;
+void g() {
+    int a;
+    bool b;
+    struct Point p;
+    (p(struct)).x(int) = a(int);
+    b(bool) = (a(int) == 3);
+    f(int)((a(int) + ((p(struct)).y(int) * 2)), b(bool));
+    g(void)();
 }
 

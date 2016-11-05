@@ -294,13 +294,15 @@ class VarDeclNode extends DeclNode {
 
     public void nameAnalysis(SymTable symTab) {
 
-	SemSym s = new SemSym(this.myType.getType()); 
+	SemSym s = new SemSym(this.myType.getType());
 	
 	try{
-	symTab.addDecl(this.myId.getStrVal(), s);
+	    symTab.addDecl(this.myId.getStrVal(), s);
+	    System.out.println("Adding SemSym");
+	    symTab.print();
 	}
-	catch(DuplicateSymException d){}
-	catch(EmptySymTableException e){}
+	catch(DuplicateSymException d){System.out.println("DuplicateSymException");}
+	catch(EmptySymTableException e){System.out.println("EmptySymTableException");}
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -330,6 +332,22 @@ class FnDeclNode extends DeclNode {
         myBody = body;
     }
 
+    public void nameAnalysis(SymTable symTab) {
+
+	SemSym s = new SemSym(this.myType.getType());
+	
+	try{
+	    symTab.addDecl(this.myId.getStrVal(), s);
+	    System.out.println("Adding SemSym");
+	    symTab.print();
+	}
+	catch(DuplicateSymException d){System.out.println("DuplicateSymException");}
+	catch(EmptySymTableException e){System.out.println("EmptySymTableException");}
+
+	this.myFormalsList.nameAnalysis(symTab);
+	this.myBody.nameAnalysis(symTab);
+    }
+
     public void unparse(PrintWriter p, int indent) {
         doIndent(p, indent);
         myType.unparse(p, 0);
@@ -340,11 +358,6 @@ class FnDeclNode extends DeclNode {
         p.println(") {");
         myBody.unparse(p, indent+4);
         p.println("}\n");
-    }
-
-    public void nameAnalysis(SymTable symTab) {
-	SemSym s = new SemSym(this.myType.getType()); 
-	this.myId.setSym(s);
     }
 
     // 4 kids
@@ -368,7 +381,12 @@ class FormalDeclNode extends DeclNode {
 
     public void nameAnalysis(SymTable symTab) {
 	SemSym s = new SemSym(this.myType.getType()); 
-	this.myId.setSym(s);
+
+	try{
+	    symTab.addDecl(this.myId.getStrVal(), s);
+	}
+	catch(DuplicateSymException d){}
+	catch(EmptySymTableException e){}
     }
 
     // 2 kids
@@ -383,8 +401,19 @@ class StructDeclNode extends DeclNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-	SemSym s = new SemSym("struct"); 
-	this.myId.setSym(s);
+	SemSym s = new SemSym("struct");
+	s.setVarName(this.myId.getStrVal());
+	
+	try{
+	    symTab.addDecl(this.myId.getStrVal(), s);
+	    System.out.println("Adding SemSym");
+	    symTab.print();
+	}
+	catch(DuplicateSymException d){System.out.println("DuplicateSymException");}
+	catch(EmptySymTableException e){System.out.println("EmptySymTableException");}
+
+	myDeclList.nameAnalysis(symTab);
+
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -400,7 +429,7 @@ class StructDeclNode extends DeclNode {
 
     // 2 kids
     private IdNode myId;
-	private DeclListNode myDeclList;
+    private DeclListNode myDeclList;
 }
 
 // **********************************************************************
@@ -415,9 +444,7 @@ class IntNode extends TypeNode {
     public IntNode() {
     }
 
-    public void nameAnalysis(SymTable symTab) {
-	System.out.print("int");
-    }
+    public void nameAnalysis(SymTable symTab) {}
 
     public void unparse(PrintWriter p, int indent) {
         p.print("int");
@@ -432,9 +459,7 @@ class BoolNode extends TypeNode {
     public BoolNode() {
     }
 
-    public void nameAnalysis(SymTable symTab) {
-
-    }
+    public void nameAnalysis(SymTable symTab) {}
 
     public void unparse(PrintWriter p, int indent) {
         p.print("bool");
@@ -449,9 +474,7 @@ class VoidNode extends TypeNode {
     public VoidNode() {
     }
 
-    public void nameAnalysis(SymTable symTab) {
-
-    }
+    public void nameAnalysis(SymTable symTab) {}
 
     public void unparse(PrintWriter p, int indent) {
         p.print("void");
@@ -468,7 +491,7 @@ class StructNode extends TypeNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.s = symTab;
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -482,6 +505,7 @@ class StructNode extends TypeNode {
 	
 	// 1 kid
     private IdNode myId;
+    private SymTable s;
 }
 
 // **********************************************************************
@@ -739,10 +763,6 @@ class IntLitNode extends ExpNode {
         myCharNum = charNum;
         myIntVal = intVal;
     }
-    
-    public String getType() {
-        return "int";
-    }
 
     public void nameAnalysis(SymTable symTab){}
 
@@ -760,10 +780,6 @@ class StringLitNode extends ExpNode {
         myLineNum = lineNum;
         myCharNum = charNum;
         myStrVal = strVal;
-    }
-
-    public String getType() {
-        return "string";
     }
 
     public void nameAnalysis(SymTable symTab){}
@@ -817,8 +833,8 @@ class IdNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTab){
-	System.out.println(getStrVal());
         SemSym semSym = symTab.lookupGlobal(myStrVal);
+	setSym(semSym);
         if(semSym == null){
             ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
         }
@@ -847,18 +863,11 @@ class IdNode extends ExpNode {
 	return this.s;
     }
 
-    public void unparse(PrintWriter p, int indent, boolean use){
+    public void unparse(PrintWriter p, int indent){
 
 	    p.print(myStrVal);
-	    p.print("(");
-	    if(this.s != null) p.print(this.s.getType());
-	    else p.print("null");
-	    p.print(")");
+	    if(this.s != null) p.print("("+this.s.getType()+")");
 
-    }
-
-    public void unparse(PrintWriter p, int indent) {
-        unparse(p, indent, false);
     }
 
     private int myLineNum;

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class SemSym {
     private String type;
-    private String typeName;
+    private String varName;
     private List<String> params;
 
     public SemSym(String type) {
@@ -18,8 +18,12 @@ public class SemSym {
         return type;
     }
 
-    public String getKind() {
-        return typeName;
+    public String getVarName() {
+        return varName;
+    }
+
+    public void setVarName(String t) {
+	this.varName = t;
     }
 
     public String toString() {

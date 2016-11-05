@@ -1,4 +1,4 @@
-public class Function extends FunctionSym {
+public class FunctionSym extends SemSym {
 
     private String returnType;
     private List<String> paramTypes;
