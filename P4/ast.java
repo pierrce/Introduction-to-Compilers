@@ -300,19 +300,18 @@ class VarDeclNode extends DeclNode {
 
 	symTab.print();
 
-	if(this.myType.getType() == "struct"){
+	if(this.myType.getType() == "struct")
 	    s = new SemSym(symTab.getCur());
-	} else {
+	else 
 	    s = new SemSym(this.myType.getType());
-	}
+	
 	
 	try{
-	    symTab.addDecl(this.myId.getStrVal(), s);
-	}
+	    symTab.addDecl(this.myId.getStrVal(), s);}
 	catch(DuplicateSymException d){
-	    System.out.println("DuplicateSymException");
-	}
-	catch(EmptySymTableException e){System.out.println("EmptySymTableException");}
+	    System.out.println("DuplicateSymException");}
+	catch(EmptySymTableException e){
+	    System.out.println("EmptySymTableException");}
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -347,11 +346,13 @@ class FnDeclNode extends DeclNode {
 	SemSym s = new SemSym(this.myType.getType());
 	
 	try{
-	    symTab.addDecl(this.myId.getStrVal(), s);
-	    symTab.print();
-	}
-	catch(DuplicateSymException d){System.out.println("FnDecl");}
-	catch(EmptySymTableException e){System.out.println("EmptySymTableException");}
+	    symTab.addDecl(this.myId.getStrVal(), s);}
+	catch(DuplicateSymException d){
+	    System.out.println("FnDecl");}
+	catch(EmptySymTableException e){
+	    System.out.println("EmptySymTableException");}
+
+	symTab.addScope();
 
 	symTab.resetFunction();
 	this.myFormalsList.nameAnalysis(symTab);
@@ -397,7 +398,6 @@ class FormalDeclNode extends DeclNode {
     public void nameAnalysis(SymTable symTab) {
 	SemSym s = new SemSym(this.myType.getType()); 
 	symTab.addToFunction(this.myType.getType());
-	System.out.println("Formally Declared "+symTab.getFunction());
 
 	try{
 	    symTab.addDecl(this.myId.getStrVal(), s);
@@ -420,6 +420,8 @@ class StructDeclNode extends DeclNode {
     public void nameAnalysis(SymTable symTab) {
 
 	SemSym s = new SemSym("struct");
+
+	symTab.addScope();
 
 	try{
 	    symTab.addDecl(this.myId.getStrVal(), s);
@@ -510,10 +512,7 @@ class StructNode extends TypeNode {
 		myId = id;
     }
 
-    public void nameAnalysis(SymTable symTab) {
-	System.out.println("HERE!");
-	this.s = symTab;
-    }
+    public void nameAnalysis(SymTable symTab) {}
 
     public void unparse(PrintWriter p, int indent) {
         p.print("struct ");
@@ -521,15 +520,9 @@ class StructNode extends TypeNode {
     }
 
     public String getType(){
-	System.out.println("Setting Struct...");
 	return "struct";
     }
-
-    public void setSymTable(SymTable st){
-	this.s = st;
-    }
 	
-	// 1 kid
     private IdNode myId;
     private SymTable s;
 }
@@ -556,7 +549,6 @@ class AssignStmtNode extends StmtNode {
         p.println(";");
     }
 
-    // 1 kid
     private AssignNode myAssign;
 }
 
@@ -575,7 +567,6 @@ class PostIncStmtNode extends StmtNode {
         p.println("++;");
     }
 
-    // 1 kid
     private ExpNode myExp;
 }
 
@@ -594,7 +585,6 @@ class PostDecStmtNode extends StmtNode {
         p.println("--;");
     }
 
-    // 1 kid
     private ExpNode myExp;
 }
 
@@ -614,7 +604,6 @@ class ReadStmtNode extends StmtNode {
         p.println(";");
     }
 
-    // 1 kid (actually can only be an IdNode or an ArrayExpNode)
     private ExpNode myExp;
 }
 
@@ -634,7 +623,6 @@ class WriteStmtNode extends StmtNode {
         p.println(";");
     }
 
-    // 1 kid
     private ExpNode myExp;
 }
 
@@ -660,7 +648,6 @@ class IfStmtNode extends StmtNode {
         p.println("}");
     }
 
-    // e kids
     private ExpNode myExp;
     private DeclListNode myDeclList;
     private StmtListNode myStmtList;
@@ -698,7 +685,6 @@ class IfElseStmtNode extends StmtNode {
         p.println("}");        
     }
 
-    // 5 kids
     private ExpNode myExp;
     private DeclListNode myThenDeclList;
     private StmtListNode myThenStmtList;
@@ -728,7 +714,6 @@ class WhileStmtNode extends StmtNode {
         p.println("}");
     }
 
-    // 3 kids
     private ExpNode myExp;
     private DeclListNode myDeclList;
     private StmtListNode myStmtList;
@@ -749,7 +734,6 @@ class CallStmtNode extends StmtNode {
         p.println(";");
     }
 
-    // 1 kid
     private CallExpNode myCall;
 }
 
@@ -772,8 +756,7 @@ class ReturnStmtNode extends StmtNode {
         p.println(";");
     }
 
-    // 1 kid
-    private ExpNode myExp; // possibly null
+    private ExpNode myExp;
 }
 
 // **********************************************************************
@@ -914,10 +897,9 @@ class DotAccessExpNode extends ExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-	    p.print("(");
-		myLoc.unparse(p, 0);
-		p.print(").");
-		myId.unparse(p, 0);
+	myLoc.unparse(p, 0);
+	p.print(".");
+	myId.unparse(p, 0);
     }
 
     // 2 kids
