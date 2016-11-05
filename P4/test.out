@@ -1,62 +1,63 @@
 int x;
 int y;
 bool b;
-struct node {
-         int number;
-         bool empty;
-}
+struct node{
+    int number;
+    bool empty;
+};
+
 void printError() {
-         s = "Error!";
-         cout << s;
-         cout << "Would you like to continue? y/n";
-         cin >> b;
-return;
+    s = "Error!";
+    cout << s;
+    cout << "Would you like to continue? y/n";
+    cin >> b;
+    return;
 }
 
 bool isTrue() {
-         if (((x + y) > (0))) {
-returntrue;
-         }
-         else {
-returnfalse;
-         }
+    if (((x + y) > 0)) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 int multiply() {
-return(x * y);
+    return (x * y);
 }
 
 void main() {
-         struct node n;
-         x = (7);
-         b = True;
-         if (b) {
-                  x = ((((4) + (3)) * (5)) - y);
-                  while (c) {
-                           y = ((y * (2)) + x);
-                  }
-         }
-         else {
-                  x = (0);
-         }
-         i1 = a.b.c.d.e.f;
-         if ((myNode.data >= (0))) {
-                  y = true;
-         }
-         else {
-                  y = false;
-         }
-         while ((x >= (0))) {
-                  while (!y) {
-                           x = (5);
-                           if (!myNode.isEmpty) {
-                                    if ((w == (0))) {
-                                             multiply();
-                                             x++;
-                                    }
-                           }
-                  }
-         }
-return;
+    struct node n;
+    x = 7;
+    b = True;
+    if (b) {
+        x = ((4 + (3 * 5)) - y);
+        while (c) {
+            y = ((y * 2) + x);
+        }
+    }
+    else {
+        x = 0;
+    }
+    i1 = (((((a).b).c).d).e).f;
+    if (((myNode).data >= 0)) {
+        y = true;
+    }
+    else {
+        y = false;
+    }
+    while ((x >= 0)) {
+        while ((!y)) {
+            x = 5;
+            if ((!(myNode).isEmpty)) {
+                if ((w == 0)) {
+                    multiply();
+                    x++;
+                }
+            }
+        }
+    }
+    return;
 }
 
