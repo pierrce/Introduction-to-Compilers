@@ -1,21 +1,21 @@
-int x;
-int y;
-bool b;
-struct node{
-    int number;
-    bool empty;
+int x(null);
+int y(null);
+bool b(null);
+struct node(struct){
+    int number(null);
+    bool empty(null);
 };
 
-void printError() {
-    s = "Error!";
-    cout << s;
+void printError(void)() {
+    s(null) = "Error!";
+    cout << s(null);
     cout << "Would you like to continue? y/n";
-    cin >> b;
+    cin >> b(null);
     return;
 }
 
-bool isTrue() {
-    if (((x + y) > 0)) {
+bool isTrue(bool)() {
+    if (((x(null) + y(null)) > 0)) {
         return true;
     }
     else {
@@ -23,37 +23,37 @@ bool isTrue() {
     }
 }
 
-int multiply() {
-    return (x * y);
+int multiply(int)() {
+    return (x(null) * y(null));
 }
 
-void main() {
-    struct node n;
-    x = 7;
-    b = True;
-    if (b) {
-        x = ((4 + (3 * 5)) - y);
-        while (c) {
-            y = ((y * 2) + x);
+void main(void)() {
+    struct node(null) n(null);
+    x(null) = 7;
+    b(null) = True(null);
+    if (b(null)) {
+        x(null) = ((4 + (3 * 5)) - y(null));
+        while (c(null)) {
+            y(null) = ((y(null) * 2) + x(null));
         }
     }
     else {
-        x = 0;
+        x(null) = 0;
     }
-    i1 = (((((a).b).c).d).e).f;
-    if (((myNode).data >= 0)) {
-        y = true;
+    i1(null) = (((((a(null)).b(null)).c(null)).d(null)).e(null)).f(null);
+    if (((myNode(null)).data(null) >= 0)) {
+        y(null) = true;
     }
     else {
-        y = false;
+        y(null) = false;
     }
-    while ((x >= 0)) {
-        while ((!y)) {
-            x = 5;
-            if ((!(myNode).isEmpty)) {
-                if ((w == 0)) {
-                    multiply();
-                    x++;
+    while ((x(null) >= 0)) {
+        while ((!y(null))) {
+            x(null) = 5;
+            if ((!(myNode(null)).isEmpty(null))) {
+                if ((w(null) == 0)) {
+                    multiply(null)();
+                    x(null)++;
                 }
             }
         }

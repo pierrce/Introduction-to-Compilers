@@ -294,6 +294,13 @@ class VarDeclNode extends DeclNode {
 
     public void nameAnalysis(SymTable symTab) {
 
+	SemSym s = new SemSym(this.myType.getType()); 
+	
+	try{
+	symTab.addDecl(this.myId.getStrVal(), s);
+	}
+	catch(DuplicateSymException d){}
+	catch(EmptySymTableException e){}
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -336,7 +343,8 @@ class FnDeclNode extends DeclNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	SemSym s = new SemSym(this.myType.getType()); 
+	this.myId.setSym(s);
     }
 
     // 4 kids
@@ -359,7 +367,8 @@ class FormalDeclNode extends DeclNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	SemSym s = new SemSym(this.myType.getType()); 
+	this.myId.setSym(s);
     }
 
     // 2 kids
@@ -374,7 +383,8 @@ class StructDeclNode extends DeclNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	SemSym s = new SemSym("struct"); 
+	this.myId.setSym(s);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -398,6 +408,7 @@ class StructDeclNode extends DeclNode {
 // **********************************************************************
 
 abstract class TypeNode extends ASTnode {
+    abstract public String getType();
 }
 
 class IntNode extends TypeNode {
@@ -405,11 +416,15 @@ class IntNode extends TypeNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	System.out.print("int");
     }
 
     public void unparse(PrintWriter p, int indent) {
         p.print("int");
+    }
+
+    public String getType(){
+	return "int";
     }
 }
 
@@ -424,6 +439,10 @@ class BoolNode extends TypeNode {
     public void unparse(PrintWriter p, int indent) {
         p.print("bool");
     }
+
+    public String getType(){
+	return "bool";
+    }
 }
 
 class VoidNode extends TypeNode {
@@ -436,6 +455,10 @@ class VoidNode extends TypeNode {
 
     public void unparse(PrintWriter p, int indent) {
         p.print("void");
+    }
+
+    public String getType(){
+	return "void";
     }
 }
 
@@ -451,6 +474,10 @@ class StructNode extends TypeNode {
     public void unparse(PrintWriter p, int indent) {
         p.print("struct ");
 		myId.unparse(p, 0);
+    }
+
+    public String getType(){
+	return "struct";
     }
 	
 	// 1 kid
@@ -470,7 +497,7 @@ class AssignStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myAssign.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -489,7 +516,7 @@ class PostIncStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -508,7 +535,7 @@ class PostDecStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -527,7 +554,7 @@ class ReadStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -547,7 +574,7 @@ class WriteStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -569,7 +596,7 @@ class IfStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -601,7 +628,7 @@ class IfElseStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -637,7 +664,7 @@ class WhileStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 	
     public void unparse(PrintWriter p, int indent) {
@@ -663,7 +690,7 @@ class CallStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myCall.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -682,7 +709,7 @@ class ReturnStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTab) {
-
+	this.myExp.nameAnalysis(symTab);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -704,7 +731,6 @@ class ReturnStmtNode extends StmtNode {
 // **********************************************************************
 
 abstract class ExpNode extends ASTnode {
-
 }
 
 class IntLitNode extends ExpNode {
@@ -712,6 +738,10 @@ class IntLitNode extends ExpNode {
         myLineNum = lineNum;
         myCharNum = charNum;
         myIntVal = intVal;
+    }
+    
+    public String getType() {
+        return "int";
     }
 
     public void nameAnalysis(SymTable symTab){}
@@ -730,6 +760,10 @@ class StringLitNode extends ExpNode {
         myLineNum = lineNum;
         myCharNum = charNum;
         myStrVal = strVal;
+    }
+
+    public String getType() {
+        return "string";
     }
 
     public void nameAnalysis(SymTable symTab){}
@@ -783,6 +817,7 @@ class IdNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTab){
+	System.out.println(getStrVal());
         SemSym semSym = symTab.lookupGlobal(myStrVal);
         if(semSym == null){
             ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
@@ -792,12 +827,38 @@ class IdNode extends ExpNode {
         }
     }
 
+    public int getLineNum(){
+	return this.myLineNum;
+    }
+
+    public int getCharNum(){
+	return this.myCharNum;
+    }
+
+    public String getStrVal(){
+	return this.myStrVal;
+    }
+
+    public void setSym(SemSym semSym){
+	this.s = semSym;
+    }
+
     public SemSym getSemSym(){
 	return this.s;
     }
 
+    public void unparse(PrintWriter p, int indent, boolean use){
+
+	    p.print(myStrVal);
+	    p.print("(");
+	    if(this.s != null) p.print(this.s.getType());
+	    else p.print("null");
+	    p.print(")");
+
+    }
+
     public void unparse(PrintWriter p, int indent) {
-        p.print(myStrVal);
+        unparse(p, indent, false);
     }
 
     private int myLineNum;

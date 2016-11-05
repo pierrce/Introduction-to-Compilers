@@ -52,24 +52,15 @@ public class P4 {
             root = P.parse(); // do the parse
             System.out.println ("program parsed correctly.");
 
-            /*
-            // name analysis
-            SymTable st = new SymTable();
-            ((ASTnode)root.value).unparse(outFile, 0);
-            if(ErrMsg.failed) {
+
+            SymTable symTab = new SymTable();
+            ((ASTnode)root.value).nameAnalysis(symTab);
+            if(ErrMsg.hasError) {
                 System.out.println("name analysis failed.");
                 System.exit(-1);
             }
             System.out.println("name analysis success.");
-            ErrMsg.failed = false;
-            // type analysis
-            ((ASTnode)root.value).typeAnalysis();
-            if(ErrMsg.failed) {
-                System.out.println("type analysis failed.");
-                System.exit(-1);
-            }
-            System.out.println("type analysis success.");
-            */
+            ErrMsg.hasError = false;
 		
         } catch (Exception ex){
             System.err.println("Exception occured during parse: " + ex);
