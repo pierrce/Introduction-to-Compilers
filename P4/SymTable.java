@@ -2,6 +2,7 @@ import java.util.*;
 
 public class SymTable {
     private List<HashMap<String, SemSym>> list;
+    private List<String> structs = new ArrayList<String>();
     private String curStruct;
     private String curFunction;
     
@@ -69,6 +70,7 @@ public class SymTable {
 
     public void setCur(String s){
 	this.curStruct = s;
+	this.structs.add(s);
     }
 
     public String getCur(){
@@ -83,6 +85,10 @@ public class SymTable {
     public String getFunction(){
 	if(this.curFunction == null) return "";
 	else return this.curFunction;
+    }
+
+    public int getStructs(){
+	return structs.size();
     }
 
     public void resetFunction(){

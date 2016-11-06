@@ -151,6 +151,8 @@ class DeclListNode extends ASTnode {
 
     public void nameAnalysis(SymTable symTab){
 
+	
+
 	Iterator i = myDecls.iterator();
 
 	try{
@@ -298,10 +300,26 @@ class VarDeclNode extends DeclNode {
 
 	SemSym s;
 
-	symTab.print();
+	if(this.myType.getType()=="void"){
+	    ErrMsg.fatal(this.myId.getCharNum(),
+	    this.myId.getLineNum(), "Non-function declared void");
+	}
+	
+	if(symTab.lookupGlobal(this.myId.getStrVal())!=null){
+	    ErrMsg.fatal(this.myId.getCharNum(),
+	    this.myId.getLineNum(), "Multiply declared identifier");
+	}
+     
 
-	if(this.myType.getType() == "struct")
-	    s = new SemSym(symTab.getCur());
+	if(this.myType.getType() == "struct"){
+	    if(HoldList.num!=symTab.getStructs()){
+		ErrMsg.fatal(this.myId.getCharNum(),
+	        this.myId.getLineNum(), "Invalid name of struct type");
+	    }
+	    s = new SemSym(symTab.getCur());   
+	    
+	}
+
 	else 
 	    s = new SemSym(this.myType.getType());
 	
@@ -312,6 +330,7 @@ class VarDeclNode extends DeclNode {
 	    System.out.println("DuplicateSymException");}
 	catch(EmptySymTableException e){
 	    System.out.println("EmptySymTableException");}
+	System.out.println(this.myId.getStrVal());
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -362,6 +381,11 @@ class FnDeclNode extends DeclNode {
 	);
 
 	this.myBody.nameAnalysis(symTab);
+
+	try{
+	    symTab.removeScope();}
+	catch(EmptySymTableException e){
+	    System.out.println("e");}
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -421,12 +445,9 @@ class StructDeclNode extends DeclNode {
 
 	SemSym s = new SemSym("struct");
 
-	symTab.addScope();
-
 	try{
 	    symTab.addDecl(this.myId.getStrVal(), s);
 	    symTab.setCur(this.myId.getStrVal());
-	    symTab.print();
 	}
 	catch(DuplicateSymException d){
 	    System.out.println("DuplicateSymException");
@@ -510,6 +531,7 @@ class VoidNode extends TypeNode {
 class StructNode extends TypeNode {
     public StructNode(IdNode id) {
 		myId = id;
+		HoldList.num++;
     }
 
     public void nameAnalysis(SymTable symTab) {}
@@ -517,6 +539,10 @@ class StructNode extends TypeNode {
     public void unparse(PrintWriter p, int indent) {
         p.print("struct ");
 		myId.unparse(p, 0);
+    }
+
+    public String getStructType(){
+	return this.myId.getStrVal();
     }
 
     public String getType(){
@@ -844,6 +870,7 @@ class IdNode extends ExpNode {
     public void nameAnalysis(SymTable symTab){
         SemSym semSym = symTab.lookupGlobal(myStrVal);
 	setSym(semSym);
+
         if(semSym == null){
             ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
         }
@@ -892,7 +919,14 @@ class DotAccessExpNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTab){
+
+
         this.myLoc.nameAnalysis(symTab);
+
+	if(symTab.lookupGlobal(this.myId.getStrVal())==null){
+	    ErrMsg.fatal(this.myId.getCharNum(),
+	    this.myId.getLineNum(), "Invalid struct field name");
+	}
 	this.myId.nameAnalysis(symTab);
     }
 

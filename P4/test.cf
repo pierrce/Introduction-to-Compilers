@@ -1,5 +1,6 @@
 int v;
 bool o;
+int z;
 
 struct Point {
     int x;
@@ -9,13 +10,14 @@ int f(int x, bool b) {
     v = x;
     o = b;
 }
+
+int h;
+
 void g() {
     int a;
+    int h;
     bool b;
     struct Point p;
-    p.x = a;
-    x.p = a;
-    b = a == 3;
-    f(a + p.y*2, b);
+    struct Apple ap;
     g();
 }
