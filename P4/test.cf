@@ -1,23 +1,29 @@
-int v;
-bool o;
-int z;
-
 struct Point {
     int x;
     int y;
 };
-int f(int x, bool b) {
-    v = x;
-    o = b;
-}
-
-int h;
-
+int f(int x, bool b) { }
 void g() {
     int a;
-    int h;
     bool b;
     struct Point p;
-    struct Apple ap;
+    p.x = a;
+    b = a == 3;
+    f(a + p.y*2, b);
     g();
 }
+bool z(int x){
+    return true;    
+}
+
+bool m(int x){
+    if(x>0){
+        return false;
+    }
+    else{
+        while(x<0){
+            x++;
+        }    
+    }
+}
+

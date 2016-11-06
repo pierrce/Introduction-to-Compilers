@@ -312,6 +312,7 @@ class VarDeclNode extends DeclNode {
      
 
 	if(this.myType.getType() == "struct"){
+	    symTab.addStruct(this.myId.getStrVal());
 	    if(HoldList.num!=symTab.getStructs()){
 		ErrMsg.fatal(this.myId.getCharNum(),
 	        this.myId.getLineNum(), "Invalid name of struct type");
@@ -330,7 +331,6 @@ class VarDeclNode extends DeclNode {
 	    System.out.println("DuplicateSymException");}
 	catch(EmptySymTableException e){
 	    System.out.println("EmptySymTableException");}
-	System.out.println(this.myId.getStrVal());
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -920,8 +920,7 @@ class DotAccessExpNode extends ExpNode {
 
     public void nameAnalysis(SymTable symTab){
 
-
-        this.myLoc.nameAnalysis(symTab);
+	this.myLoc.nameAnalysis(symTab);
 
 	if(symTab.lookupGlobal(this.myId.getStrVal())==null){
 	    ErrMsg.fatal(this.myId.getCharNum(),

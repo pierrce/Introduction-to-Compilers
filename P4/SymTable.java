@@ -2,6 +2,7 @@ import java.util.*;
 
 public class SymTable {
     private List<HashMap<String, SemSym>> list;
+    private List<String> structFields = new ArrayList<String>();
     private List<String> structs = new ArrayList<String>();
     private String curStruct;
     private String curFunction;
@@ -70,7 +71,7 @@ public class SymTable {
 
     public void setCur(String s){
 	this.curStruct = s;
-	this.structs.add(s);
+	this.structFields.add(s);
     }
 
     public String getCur(){
@@ -88,7 +89,15 @@ public class SymTable {
     }
 
     public int getStructs(){
-	return structs.size();
+	return structFields.size();
+    }
+
+    public void addStruct(String s){
+	structs.add(s);
+    }
+
+    public boolean containsStruct(String s){
+	return structs.contains(s);
     }
 
     public void resetFunction(){

@@ -1,55 +1,37 @@
-// should include bad and multiply declared names for all of the different kinds of names, 
-// and in all of the different places that declarations can appear.
-int glb;
-int glb;
-bool b;
-bool b;
+int v;
+bool o;
+int z;
 
-struct a{
-    int member;
-}
-
-struct a[
-    int member;
-}
-
-struct s1{
-    int a;
-    int b;
-    bool x;
+struct Point {
+    int x;
+    int y;
 };
 
-struct s2{
-    int a;
-    int b;
-}
-
-struct s3{
-       struct s2 inner;
-       int val;
+struct ww {
+    int x;
+    int y;
 };
 
+int f(int x, bool b) {
+    v = x;
+    o = b;
+}
 
-// Non-function declared void
-void main(int a, int k) {
+int h;
+bool v;
+void q;
 
-    // test names
-    int glb;
-    bool myB;
-    struct s1 s1_Inst1;
-    struct s1 s1_Inst2;
-    struct s2 s2_Inst;
-    struct s3 s3_Inst;
-    // invalid struct type name
-    struct inva invalid;
-
-    // undeclared id
-    tomato = glb;
-    // non-function declared void
-    void q;
-    // dot Access non-struct type
-    s3 = glb.x;
-    // invalid struct field name
-    s1_Inst1 = s1_Invalid.invalid;
-
+void g() {
+    int a;
+    bool b;
+    struct v testS;
+    struct ww testw;
+    struct Point p;
+    struct Joint j;
+    p.x = a;
+    p.q = a;
+    b = a == 3;
+    f(a + p.y*2, b);
+    z();
+    g();
 }
