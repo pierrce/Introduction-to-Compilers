@@ -147,6 +147,7 @@ class ProgramNode extends ASTnode {
     private DeclListNode myDeclList;
 }
 
+//Does not need type checking.
 class DeclListNode extends ASTnode {
     public DeclListNode(List<DeclNode> S) {
         myDecls = S;
@@ -192,6 +193,7 @@ class DeclListNode extends ASTnode {
     private List<DeclNode> myDecls;
 }
 
+//Does not need type checking.
 class FormalsListNode extends ASTnode {
     public FormalsListNode(List<FormalDeclNode> S) {
         myFormals = S;
@@ -237,6 +239,7 @@ class FormalsListNode extends ASTnode {
     private List<FormalDeclNode> myFormals;
 }
 
+//Might need type checking.
 class FnBodyNode extends ASTnode {
     public FnBodyNode(DeclListNode declList, StmtListNode stmtList) {
         myDeclList = declList;
@@ -264,6 +267,7 @@ class FnBodyNode extends ASTnode {
     private StmtListNode myStmtList;
 }
 
+//Might need type checking.
 class StmtListNode extends ASTnode {
     public StmtListNode(List<StmtNode> S) {
         myStmts = S;
@@ -290,6 +294,7 @@ class StmtListNode extends ASTnode {
     private List<StmtNode> myStmts;
 }
 
+//Might need type checking.
 class ExpListNode extends ASTnode {
     public ExpListNode(List<ExpNode> S) {
         myExps = S;
@@ -324,6 +329,7 @@ class ExpListNode extends ASTnode {
 // DeclNode and its subclasses
 // **********************************************************************
 
+//Doesn't need type checking.
 abstract class DeclNode extends ASTnode {
     /**
      * Note: a formal decl needs to return a sym
@@ -331,6 +337,7 @@ abstract class DeclNode extends ASTnode {
     abstract public SemSym nameAnalysis(SymTable symTab);
 }
 
+//Doesn't need type checking.
 class VarDeclNode extends DeclNode {
     public VarDeclNode(TypeNode type, IdNode id, int size) {
         myType = type;
@@ -431,6 +438,7 @@ class VarDeclNode extends DeclNode {
     public static int NOT_STRUCT = -1;
 }
 
+//Doesn't need type checking.
 class FnDeclNode extends DeclNode {
     public FnDeclNode(TypeNode type,
                       IdNode id,
@@ -520,6 +528,7 @@ class FnDeclNode extends DeclNode {
     private FnBodyNode myBody;
 }
 
+//Doesn't need type checking.
 class FormalDeclNode extends DeclNode {
     public FormalDeclNode(TypeNode type, IdNode id) {
         myType = type;
@@ -581,6 +590,7 @@ class FormalDeclNode extends DeclNode {
     private IdNode myId;
 }
 
+//Doesn't need type checking.
 class StructDeclNode extends DeclNode {
     public StructDeclNode(IdNode id, DeclListNode declList) {
         myId = id;
@@ -651,11 +661,13 @@ class StructDeclNode extends DeclNode {
 // TypeNode and its Subclasses
 // **********************************************************************
 
+//Doesn't need type checking.
 abstract class TypeNode extends ASTnode {
     /* all subclasses must provide a type method */
     abstract public Type type();
 }
 
+//Doesn't need type checking.
 class IntNode extends TypeNode {
     public IntNode() {
     }
@@ -672,6 +684,7 @@ class IntNode extends TypeNode {
     }
 }
 
+//Doesn't need type checking.
 class BoolNode extends TypeNode {
     public BoolNode() {
     }
@@ -688,6 +701,7 @@ class BoolNode extends TypeNode {
     }
 }
 
+//Doesn't need type checking.
 class VoidNode extends TypeNode {
     public VoidNode() {
     }
@@ -704,6 +718,7 @@ class VoidNode extends TypeNode {
     }
 }
 
+//Doesn't need type checking.
 class StructNode extends TypeNode {
     public StructNode(IdNode id) {
         myId = id;
@@ -733,10 +748,12 @@ class StructNode extends TypeNode {
 // StmtNode and its subclasses
 // **********************************************************************
 
+//Does need type checking.
 abstract class StmtNode extends ASTnode {
     abstract public void nameAnalysis(SymTable symTab);
 }
 
+//Does need type checking.
 class AssignStmtNode extends StmtNode {
     public AssignStmtNode(AssignNode assign) {
         myAssign = assign;
@@ -760,6 +777,7 @@ class AssignStmtNode extends StmtNode {
     private AssignNode myAssign;
 }
 
+//Does need type checking.
 class PostIncStmtNode extends StmtNode {
     public PostIncStmtNode(ExpNode exp) {
         myExp = exp;
@@ -783,6 +801,7 @@ class PostIncStmtNode extends StmtNode {
     private ExpNode myExp;
 }
 
+//Does need type checking.
 class PostDecStmtNode extends StmtNode {
     public PostDecStmtNode(ExpNode exp) {
         myExp = exp;
@@ -806,6 +825,7 @@ class PostDecStmtNode extends StmtNode {
     private ExpNode myExp;
 }
 
+//Does need type checking.
 class ReadStmtNode extends StmtNode {
     public ReadStmtNode(ExpNode e) {
         myExp = e;
@@ -830,6 +850,7 @@ class ReadStmtNode extends StmtNode {
     private ExpNode myExp;
 }
 
+//Does need type checking.
 class WriteStmtNode extends StmtNode {
     public WriteStmtNode(ExpNode exp) {
         myExp = exp;
@@ -854,6 +875,7 @@ class WriteStmtNode extends StmtNode {
     private ExpNode myExp;
 }
 
+//Does need type checking.
 class IfStmtNode extends StmtNode {
     public IfStmtNode(ExpNode exp, DeclListNode dlist, StmtListNode slist) {
         myDeclList = dlist;
@@ -900,6 +922,7 @@ class IfStmtNode extends StmtNode {
     private StmtListNode myStmtList;
 }
 
+//Does need type checking.
 class IfElseStmtNode extends StmtNode {
     public IfElseStmtNode(ExpNode exp, DeclListNode dlist1,
                           StmtListNode slist1, DeclListNode dlist2,
@@ -971,6 +994,7 @@ class IfElseStmtNode extends StmtNode {
     private DeclListNode myElseDeclList;
 }
 
+//Does need type checking.
 class WhileStmtNode extends StmtNode {
     public WhileStmtNode(ExpNode exp, DeclListNode dlist, StmtListNode slist) {
         myExp = exp;
@@ -1017,6 +1041,7 @@ class WhileStmtNode extends StmtNode {
     private StmtListNode myStmtList;
 }
 
+//Does need type checking.
 class CallStmtNode extends StmtNode {
     public CallStmtNode(CallExpNode call) {
         myCall = call;
@@ -1040,6 +1065,7 @@ class CallStmtNode extends StmtNode {
     private CallExpNode myCall;
 }
 
+//Does need type checking.
 class ReturnStmtNode extends StmtNode {
     public ReturnStmtNode(ExpNode exp) {
         myExp = exp;
@@ -1074,6 +1100,7 @@ class ReturnStmtNode extends StmtNode {
 // ExpNode and its subclasses
 // **********************************************************************
 
+//Might need type checking.
 abstract class ExpNode extends ASTnode {
     /**
      * Default version for nodes with no names
@@ -1081,6 +1108,7 @@ abstract class ExpNode extends ASTnode {
     public void nameAnalysis(SymTable symTab) { }
 }
 
+//Might need type checking.
 class IntLitNode extends ExpNode {
     public IntLitNode(int lineNum, int charNum, int intVal) {
         myLineNum = lineNum;
@@ -1097,6 +1125,7 @@ class IntLitNode extends ExpNode {
     private int myIntVal;
 }
 
+//Might need type checking.
 class StringLitNode extends ExpNode {
     public StringLitNode(int lineNum, int charNum, String strVal) {
         myLineNum = lineNum;
@@ -1113,6 +1142,7 @@ class StringLitNode extends ExpNode {
     private String myStrVal;
 }
 
+//Might need type checking.
 class TrueNode extends ExpNode {
     public TrueNode(int lineNum, int charNum) {
         myLineNum = lineNum;
@@ -1127,6 +1157,7 @@ class TrueNode extends ExpNode {
     private int myCharNum;
 }
 
+//Might need type checking.
 class FalseNode extends ExpNode {
     public FalseNode(int lineNum, int charNum) {
         myLineNum = lineNum;
@@ -1141,6 +1172,7 @@ class FalseNode extends ExpNode {
     private int myCharNum;
 }
 
+//Might need type checking.
 class IdNode extends ExpNode {
     public IdNode(int lineNum, int charNum, String strVal) {
         myLineNum = lineNum;
@@ -1211,6 +1243,7 @@ class IdNode extends ExpNode {
     private SemSym mySym;
 }
 
+//Might need type checking.
 class DotAccessExpNode extends ExpNode {
     public DotAccessExpNode(ExpNode loc, IdNode id) {
         myLoc = loc;    
@@ -1349,6 +1382,7 @@ class DotAccessExpNode extends ExpNode {
     private boolean badAccess;  // to prevent multiple, cascading errors
 }
 
+//Might need type checking.
 class AssignNode extends ExpNode {
     public AssignNode(ExpNode lhs, ExpNode exp) {
         myLhs = lhs;
@@ -1378,6 +1412,7 @@ class AssignNode extends ExpNode {
     private ExpNode myExp;
 }
 
+//Might need type checking.
 class CallExpNode extends ExpNode {
     public CallExpNode(IdNode name, ExpListNode elist) {
         myId = name;
@@ -1414,6 +1449,7 @@ class CallExpNode extends ExpNode {
     private ExpListNode myExpList;  // possibly null
 }
 
+//Might need type checking.
 abstract class UnaryExpNode extends ExpNode {
     public UnaryExpNode(ExpNode exp) {
         myExp = exp;
@@ -1431,6 +1467,7 @@ abstract class UnaryExpNode extends ExpNode {
     protected ExpNode myExp;
 }
 
+//Might need type checking.
 abstract class BinaryExpNode extends ExpNode {
     public BinaryExpNode(ExpNode exp1, ExpNode exp2) {
         myExp1 = exp1;
@@ -1456,6 +1493,7 @@ abstract class BinaryExpNode extends ExpNode {
 // Subclasses of UnaryExpNode
 // **********************************************************************
 
+//Might need type checking.
 class UnaryMinusNode extends UnaryExpNode {
     public UnaryMinusNode(ExpNode exp) {
         super(exp);
@@ -1468,6 +1506,7 @@ class UnaryMinusNode extends UnaryExpNode {
     }
 }
 
+//Might need type checking.
 class NotNode extends UnaryExpNode {
     public NotNode(ExpNode exp) {
         super(exp);
@@ -1484,6 +1523,7 @@ class NotNode extends UnaryExpNode {
 // Subclasses of BinaryExpNode
 // **********************************************************************
 
+//Might need type checking.
 class PlusNode extends BinaryExpNode {
     public PlusNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1498,6 +1538,7 @@ class PlusNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class MinusNode extends BinaryExpNode {
     public MinusNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1512,6 +1553,7 @@ class MinusNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class TimesNode extends BinaryExpNode {
     public TimesNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1526,6 +1568,7 @@ class TimesNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class DivideNode extends BinaryExpNode {
     public DivideNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1540,6 +1583,7 @@ class DivideNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class AndNode extends BinaryExpNode {
     public AndNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1554,6 +1598,7 @@ class AndNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class OrNode extends BinaryExpNode {
     public OrNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1568,6 +1613,7 @@ class OrNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class EqualsNode extends BinaryExpNode {
     public EqualsNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1582,6 +1628,7 @@ class EqualsNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class NotEqualsNode extends BinaryExpNode {
     public NotEqualsNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1596,6 +1643,7 @@ class NotEqualsNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class LessNode extends BinaryExpNode {
     public LessNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1610,6 +1658,7 @@ class LessNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class GreaterNode extends BinaryExpNode {
     public GreaterNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1624,6 +1673,7 @@ class GreaterNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class LessEqNode extends BinaryExpNode {
     public LessEqNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
@@ -1638,6 +1688,7 @@ class LessEqNode extends BinaryExpNode {
     }
 }
 
+//Might need type checking.
 class GreaterEqNode extends BinaryExpNode {
     public GreaterEqNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
