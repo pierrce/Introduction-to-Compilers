@@ -1,0 +1,83 @@
+int m;
+bool j;
+
+void f(int z, int l){
+    return;
+}
+
+void g() {
+    return m;
+}
+
+int v(){
+    return;
+}
+
+int c() {
+    return j;
+}
+
+struct Point {
+    int x;
+    int y;
+};
+
+struct Loint {
+    int x;
+    int y;
+};
+
+int main(){
+
+    int z;
+    int l;
+    int k;
+    bool b;
+    struct Point p;
+    struct Loint t;
+
+    cout << f;
+    cout << Point;
+    cout << p;
+    cout << f();
+    cin >> f;
+    cin >> Point;
+    cin >> p;
+
+    x();
+    f(z,l,k);
+    f(b,z);
+    v();
+    g();
+    c();
+
+    j=j+b;
+    j=j-b;
+    j=j*b;
+    j=j/b;
+    j++;
+    j--;
+    j=j>b;
+    j=j<b;
+    j=j<=b;
+    j=j>=b;
+
+    z=!z;
+    z = (z && k);
+    z = (z || k);
+
+    if(z){}
+    while(z){}
+    if(z==j){}
+    if(z!=j){}
+
+    if(f==g){}
+    if(f!=g){}
+    if(Point==Loint){}
+    if(Point!=Loint){}
+    if(p==t){}
+    if(p!=t){}
+    f = g;
+    Point = Loint;
+    p=t;
+}

@@ -40,7 +40,7 @@ ErrMsg.class: ErrMsg.java
 
 ##test
 test:
-	java   P5 test.cf test.out
+	java   P5 typeErrors.cf test.out
 
 ###
 # clean

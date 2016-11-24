@@ -16,7 +16,7 @@ public class P5 {
 	FileReader inFile;
 	private PrintWriter outFile;
 	private static PrintStream outStream = System.err;
-	
+
 	public static final int RESULT_CORRECT = 0;
 	public static final int RESULT_SYNTAX_ERROR = 1;
 	public static final int RESULT_TYPE_ERROR = 2;
@@ -28,34 +28,34 @@ public class P5 {
 	 */
 	public P5(){
 	}
-	
+
 	/**
 	 * If we are directly invoking P5 from the command line, this
 	 * is the command line to use. It shouldn't be invoked from
 	 * outside the class (hence the private constructor) because
-	 * it 
+	 * it
 	 * @param args command line args array for [<infile> <outfile>]
 	 */
 	private P5(String[] args){
-    	//Parse arguments    	
+    	//Parse arguments
         if (args.length < 2) {
         	String msg = "please supply name of file to be parsed"
         			+ "and name of file for unparsed version.";
         	pukeAndDie(msg);
         }
-		
+
 		try{
 			setInfile(args[0]);
 			setOutfile(args[1]);
 		} catch(BadInfileException e){
-            pukeAndDie(e.getMessage());			
+            pukeAndDie(e.getMessage());
 		} catch(BadOutfileException e){
 			pukeAndDie(e.getMessage());
 		}
 	}
 
 	/**
-	 * Source code file path 
+	 * Source code file path
 	 * @param filename path to source file
 	 */
 	public void setInfile(String filename) throws BadInfileException{
@@ -67,7 +67,7 @@ public class P5 {
 	}
 
 	/**
-	 * Text file output 
+	 * Text file output
 	 * @param filename path to destination file
 	 */
 	public void setOutfile(String filename) throws BadOutfileException{
@@ -77,11 +77,11 @@ public class P5 {
         	throw new BadOutfileException(ex, filename);
         }
 	}
-	
+
 	/**
 	 * Perform cleanup at the end of parsing. This should be called
 	 * after both good and bad input so that the files are all in a
-	 * consistent state 
+	 * consistent state
 	 */
 	public void cleanup(){
 		if (inFile != null){
@@ -93,15 +93,15 @@ public class P5 {
 			}
 		}
 		if (outFile != null){
-			//If there is any output that needs to be 
+			//If there is any output that needs to be
 			// written to the stream, force it out.
 			outFile.flush();
 			outFile.close();
 		}
 	}
-	
-	/** 
-	 * Private error handling method. Convenience method for 
+
+	/**
+	 * Private error handling method. Convenience method for
 	 * @link pukeAndDie(String, int) with a default error code
 	 * @param error message to print on exit
 	 */
@@ -109,17 +109,17 @@ public class P5 {
 		pukeAndDie(error, -1);
 	}
 
-	/** 
-	 * Private error handling method. Prints an error message 
+	/**
+	 * Private error handling method. Prints an error message
 	 * @link pukeAndDie(String, int) with a default error code
 	 * @param error message to print on exit
 	 */
 	private void pukeAndDie(String error, int retCode){
         outStream.println(error);
         cleanup();
-		System.exit(-1);		
+		System.exit(-1);
 	}
-	
+
 	/** the parser will return a Symbol whose value
 	 * field is the translation of the root nonterminal
      * (i.e., of the nonterminal "program")
@@ -133,30 +133,30 @@ public class P5 {
 			return null;
 		}
 	}
-	
+
 	public int process(){
 		Symbol cfgRoot = parseCFG();
-		
-		ProgramNode astRoot = (ProgramNode)cfgRoot.value; 
-		if (ErrMsg.getErr()) {  
+
+		ProgramNode astRoot = (ProgramNode)cfgRoot.value;
+		if (ErrMsg.getErr()) {
 			return P5.RESULT_SYNTAX_ERROR;
 		}
-		
+
 		astRoot.nameAnalysis();  // perform name analysis
-		
+
 		astRoot.typeCheck();
-		
+
 		astRoot.unparse(outFile, 0);
 		return P5.RESULT_CORRECT;
 	}
-	
+
 	public void run(){
 		int resultCode = process();
 		if (resultCode == RESULT_CORRECT){
 			cleanup();
 			return;
 		}
-		
+
 		switch(resultCode){
 		case RESULT_SYNTAX_ERROR:
 			pukeAndDie("Syntax error", resultCode);
@@ -166,37 +166,37 @@ public class P5 {
 			pukeAndDie("Type checking error", RESULT_OTHER_ERROR);
 		}
 	}
-	
+
 	private class BadInfileException extends Exception{
-		private static final long serialVersionUID = 1L;		
+		private static final long serialVersionUID = 1L;
 		private String message;
-		
+
 		public BadInfileException(Exception cause, String filename) {
 			super(cause);
 			this.message = "Could not open " + filename + " for reading";
 		}
-		
+
 		@Override
 		public String getMessage(){
 			return message;
 		}
 	}
-	
+
 	private class BadOutfileException extends Exception{
-		private static final long serialVersionUID = 1L;		
+		private static final long serialVersionUID = 1L;
 		private String message;
-		
+
 		public BadOutfileException(Exception cause, String filename) {
 			super(cause);
 			this.message = "Could not open " + filename + " for reading";
 		}
-		
+
 		@Override
 		public String getMessage(){
 			return message;
 		}
 	}
-	
+
     public static void main(String[] args){
     	P5 instance = new P5(args);
     	instance.run();
