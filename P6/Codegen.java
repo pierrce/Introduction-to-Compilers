@@ -23,7 +23,7 @@ import java.io.*;
 
 public class Codegen {
     // file into which generated code is written
-    public static PrintWriter p = null;    
+    public static PrintWriter p = null;
 
     // values of true and false
     public static final String TRUE = "1";
@@ -53,7 +53,7 @@ public class Codegen {
     // GENERATE OPERATIONS
     // **********************************************************************
     // **********************************************************************
-    
+
     // **********************************************************************
     // generateWithComment
     //    given:  op code, comment, and 0 to 3 string args
@@ -62,19 +62,19 @@ public class Codegen {
     public static void generateWithComment(String opcode, String comment,
                                         String arg1, String arg2, String arg3) {
         int space = MAXLEN - opcode.length() + 2;
-    
+
         p.print("\t" + opcode);
         if (arg1 != "") {
-            for (int k = 1; k <= space; k++) 
+            for (int k = 1; k <= space; k++)
                 p.print(" ");
             p.print(arg1);
             if (arg2 != "") {
                 p.print(", " + arg2);
-                if (arg3 != "") 
+                if (arg3 != "")
                     p.print(", " + arg3);
             }
         }
-        if (comment != "") 
+        if (comment != "")
             p.print("\t\t#" + comment);
         p.println();
     }
@@ -101,15 +101,15 @@ public class Codegen {
     public static void generate(String opcode, String arg1, String arg2,
                                 String arg3) {
         int space = MAXLEN - opcode.length() + 2;
-    
+
         p.print("\t" + opcode);
         if (arg1 != "") {
-            for (int k = 1; k <= space; k++) 
+            for (int k = 1; k <= space; k++)
                 p.print(" ");
             p.print(arg1);
             if (arg2 != "") {
                 p.print(", " + arg2);
-                if (arg3 != "") 
+                if (arg3 != "")
                     p.print(", " + arg3);
             }
         }
@@ -136,13 +136,13 @@ public class Codegen {
     public static void generate(String opcode, String arg1, String arg2,
                                 int arg3) {
         int space = MAXLEN - opcode.length() + 2;
-    
+
         p.print("\t" + opcode);
-        for (int k = 1; k <= space; k++) 
+        for (int k = 1; k <= space; k++)
             p.print(" ");
         p.println(arg1 + ", " + arg2 + ", " + arg3);
     }
-    
+
     // **********************************************************************
     // generate (one string arg, one int)
     //    given:  op code and args
@@ -150,13 +150,13 @@ public class Codegen {
     // **********************************************************************
     public static void generate(String opcode, String arg1, int arg2) {
         int space = MAXLEN - opcode.length() + 2;
-    
+
         p.print("\t" + opcode);
-        for (int k = 1; k <= space; k++) 
+        for (int k = 1; k <= space; k++)
             p.print(" ");
         p.println(arg1 + ", " + arg2);
     }
-    
+
     // **********************************************************************
     // generateIndexed
     //    given:  op code, target register T1 (as string), indexed register T2
@@ -167,16 +167,16 @@ public class Codegen {
     public static void generateIndexed(String opcode, String arg1, String arg2,
                                        int arg3, String comment) {
         int space = MAXLEN - opcode.length() + 2;
-    
+
         p.print("\t" + opcode);
-        for (int k = 1; k <= space; k++) 
+        for (int k = 1; k <= space; k++)
             p.print(" ");
         p.print(arg1 + ", " + arg3 + "(" + arg2 + ")");
-        if (comment != "") 
+        if (comment != "")
             p.print("\t#" + comment);
         p.println();
     }
-    
+
     public static void generateIndexed(String opcode, String arg1, String arg2,
                                        int arg3) {
         generateIndexed(opcode, arg1, arg2, arg3, "");
@@ -190,15 +190,15 @@ public class Codegen {
     public static void generateLabeled(String label, String opcode,
                                        String comment, String arg1) {
         int space = MAXLEN - opcode.length() + 2;
-    
+
         p.print(label + ":");
         p.print("\t" + opcode);
         if (arg1 != "") {
-            for (int k = 1; k <= space; k++) 
+            for (int k = 1; k <= space; k++)
                 p.print(" ");
             p.print(arg1);
         }
-        if (comment != "") 
+        if (comment != "")
             p.print("\t# " + comment);
         p.println();
     }
@@ -233,15 +233,15 @@ public class Codegen {
     // **********************************************************************
     public static void genLabel(String label, String comment) {
         p.print(label + ":");
-        if (comment != "") 
+        if (comment != "")
             p.print("\t\t" + "# " + comment);
         p.println();
     }
-    
+
     public static void genLabel(String label) {
         genLabel(label, "");
     }
-    
+
     // **********************************************************************
     // Return a different label each time:
     //        L0 L1 L2, etc.
