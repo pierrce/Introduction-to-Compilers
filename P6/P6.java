@@ -28,19 +28,18 @@ public class P6 {
             System.exit(-1);
         }
 
-		//modified here, should be code gen file
         // open output file
         PrintWriter outFile = null;
-        if(args.length == 3 ){
+        if(args.length == 3 ) {
         	try {
            	 outFile = new PrintWriter(args[2]);
         	} catch (FileNotFoundException ex) {
            		System.err.println("The file " + args[2] + " could not be opened for writing.");
             	System.exit(-1);
         	}
-		}
+	}
 	
-		//code gen file
+	//code gen file
         PrintWriter codeGenFile = null;
         try {
             codeGenFile = new PrintWriter(args[1]);
@@ -53,50 +52,51 @@ public class P6 {
 
         parser P = new parser(new Yylex(inFile));
 
-        Symbol root = null; /
+        Symbol root = null; 
 
         try {
             root = P.parse(); 
-            // remove print after debuging
+            ]// remove print after debuging
             //System.out.println ("program parsed correctly.");
         } catch (Exception ex){
             System.err.println("Exception occured during parse: " + ex);
             System.exit(-1);
         }
 
-		// analyze the ast
+	// analyze the ast
       	((ProgramNode)root.value).nameAnalysis();
 
-		if(ErrMsg.isError == true){
-			System.err.println("Errors occured during name analyze" );
-			System.exit(-1);
-		} else {
+	if(ErrMsg.isError == true) {
+	    System.err.println("Errors occured during name analyze" );
+	    System.exit(-1);
+        } 
+        else {
             // remove print after debuging
-			//System.out.println("Name analyze succeeded");
-		}
+	    //System.out.println("Name analyze succeeded");
+	}
 	
-		((ProgramNode)root.value).typeCheck();
+        ((ProgramNode)root.value).typeCheck();
 
-		if(ErrMsg.isError == true){
-			System.err.println("Errors occured during type check" );
-			System.exit(-1);
-		} else {
+        if(ErrMsg.isError == true) {
+            System.err.println("Errors occured during type check" );
+            System.exit(-1);
+        } 
+        else {
             // remove print after debuging
-			//System.out.println("No type errors, type check succeeded");
-		}
-		
+	    //System.out.println("No type errors, type check succeeded");
+	}	
 
-		// unparse the ast
-		if(args.length == 3){
-        	((ASTnode)root.value).unparse(outFile, 0);
-        	outFile.close();
-		}
-
-		//to code gen
-		//assert(root instanceof ProgramNode);
-		((ProgramNode)root.value).codeGen(codeGenFile);
-		codeGenFile.close();
-
+	// unparse the ast
+	if(args.length == 3) {
+            ((ASTnode)root.value).unparse(outFile, 0);
+            outFile.close();
+	}
+	    
+	//to code gen
+	//assert(root instanceof ProgramNode);
+	((ProgramNode)root.value).codeGen(codeGenFile);
+	codeGenFile.close();
+	    
         return;
     }
 }
