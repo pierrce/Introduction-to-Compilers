@@ -131,8 +131,20 @@ class ProgramNode extends ASTnode {
      * all of the globals, struct defintions, and functions in the program.
      */
     public void nameAnalysis() {
+        boolean hasMain = false;
         SymTable symTab = new SymTable();
         myDeclList.nameAnalysis(symTab);
+        
+        List<DeclNode> dNodes = myDeclList.getMyDecls();
+        
+        for (DeclNode n : dNodes) {
+            if (n instanceof FnDeclNode) 
+                if (((FnDeclNode)n).getMyId().name().equals("main)) hasMain = true;
+            else if (n instanceof VarDeclNode) 
+                ((VarDeclNode)n).getMyId().setToGlobal();
+        }
+        if (!hasMain)
+            ErrMsg.fatal(0, 0, "No main function.");
     }
     
     /**
@@ -198,6 +210,10 @@ class DeclListNode extends ASTnode {
             System.err.println("unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
+    }
+    
+    public List<DeclNode> getMyDecls() {
+        return this.myDecls;
     }
 
     // list of kids (DeclNodes)
@@ -1529,7 +1545,17 @@ class IdNode extends ExpNode {
             p.print("(" + mySym + ")");
         }
     }
+    
+    public boolean isLocal() {
+        return this.isLocal;
+    }
+    
+    public void setToGlobal() {
+        this.isLocal = false;
+    }
 
+    private boolean isLocal;
+    
     private int myLineNum;
     private int myCharNum;
     private String myStrVal;
