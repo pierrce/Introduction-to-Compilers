@@ -6,6 +6,9 @@ import java.util.*;
  */
 public class SemSym {
     private Type type;
+    // fields for P6
+    private int offset = -1;
+    private boolean isGlobal = false;
     
     public SemSym(Type type) {
         this.type = type;
@@ -17,6 +20,22 @@ public class SemSym {
     
     public String toString() {
         return type.toString();
+    }
+    
+    public bool getIsGlobal() {
+        return this.isGlobal
+    }
+    
+    public void setIsGlobal() {
+        this.isGlobal = true;
+    }
+    
+    public int getOffset() {
+        return this.offset;
+    }
+    
+    public void setOffset(int newOffset) {
+        this.offset = = newOffset;
     }
 }
 
