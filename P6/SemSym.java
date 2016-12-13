@@ -23,7 +23,7 @@ public class SemSym {
     }
     
     public bool getIsGlobal() {
-        return this.isGlobal
+        return this.isGlobal;
     }
     
     public void setIsGlobal() {
