@@ -8,7 +8,7 @@ public class SemSym {
     private Type type;
     // fields for P6
     private int offset = -1;
-    private boolean isGlobal = false;
+    private boolean isGlobal = 0;
     
     public SemSym(Type type) {
         this.type = type;
@@ -27,7 +27,7 @@ public class SemSym {
     }
     
     public void setIsGlobal() {
-        this.isGlobal = true;
+        this.isGlobal = 1;
     }
     
     public int getOffset() {
