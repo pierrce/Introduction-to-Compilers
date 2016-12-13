@@ -1,30 +1,63 @@
-struct Point {
+int i_global;
+bool b_global
+
+struct myStruct {
     int x;
     int y;
 };
 
-int f(int x, bool b) { }
-
-void g() {
-    int a;
-    bool b;
-    struct Point p;
-    p.x = a;
-    a = 3;
-    g();
+int func1() {
+    return 0;
 }
 
-bool z(int x){
+int func2() {
+    return 2;
+}
+
+bool func3() {
     return true;
 }
 
-bool m(int x){
-    if(x>0){
-        return false;
-    }
-    else{
-        while(x<0){
-            x++;
+bool func4() {
+    return false;
+}
+
+int addFunc(int a, int b) {
+    int funcLocal;
+    funcLocal = a + b;
+    return funcLocal
+}
+
+void main() {
+    int i_local;
+    int b_local;
+    
+    i_local = 1;
+    i_global = 2;
+    
+    i_global += func1();
+    i_local += func2();
+    
+    b_global = func3();
+    b_local = b_global;
+    b_local = func4();
+    
+    while (b_global) {
+        if (b_global == b_local) {
+            i_local = i_global;
+            b_global = false;
+        }
+        else {
+            b_local = b_global;
         }
     }
+    
+    int sum;
+    sum = addFunc(i_local, i_global);
 }
+
+
+
+
+
+
