@@ -15,11 +15,11 @@ int func2() {
 }
 
 bool func3() {
-    return true;
+    return 1;
 }
 
 bool func4() {
-    return false;
+    return 0;
 }
 
 int addFunc(int a, int b) {
@@ -30,7 +30,7 @@ int addFunc(int a, int b) {
 
 void main() {
     int i_local;
-    int b_local;
+    bool b_local;
     
     i_local = 1;
     i_global = 2;
@@ -45,7 +45,7 @@ void main() {
     while (b_global) {
         if (b_global == b_local) {
             i_local = i_global;
-            b_global = false;
+            b_global = 0;
         }
         else {
             b_local = b_global;
