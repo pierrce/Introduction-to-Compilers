@@ -13,7 +13,7 @@ public class P6 {
     public static void main(String[] args) throws IOException
     {
         // check command-line args
-        if (args.length < 2 || args.length > 3) {
+        if (args.length != 2 && args.length != 3) {
             System.err.println("please supply the names of file to be parsed/unparsed.");
             System.exit(-1);
         }
