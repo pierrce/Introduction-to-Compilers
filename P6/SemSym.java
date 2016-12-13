@@ -35,7 +35,7 @@ public class SemSym {
     }
     
     public void setOffset(int newOffset) {
-        this.offset = = newOffset;
+        this.offset = newOffset;
     }
 }
 
